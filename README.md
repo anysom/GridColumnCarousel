@@ -1,1 +1,1 @@
-# BootstrapColumnCarousel
+# Bootstrap Column Carousel
