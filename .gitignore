@@ -1,0 +1,5 @@
+# Ignore Node JS modules
+node_modules
+
+# Ignore all instances of Thumbs.db
+Thumbs.db
