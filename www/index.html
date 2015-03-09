@@ -3,10 +3,19 @@
     <style href="css/BootstrapColumnCarousel.min.css"></style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-    <script src="js/directive/BootstrapColumnCarousel.js"></script>
     <script src="js/BootstrapColumnCarousel.js"></script>
   </head>
   <body>
     <h1>Bootstrap Column Carousel - demonstration</h1>
   </body>
+
+  <script>
+    console.log('started application');
+    console.log(this);
+    console.log(BCCarousel);
+
+    var bCCarousel = new BCCarousel();
+    console.log(bCCarousel);
+    bCCarousel.slide();
+  </script>
 </html>
