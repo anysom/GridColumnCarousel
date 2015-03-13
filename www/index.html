@@ -7,15 +7,40 @@
   </head>
   <body>
     <h1>Bootstrap Column Carousel - demonstration</h1>
+
+    <div class="container">
+      <div class="column-slider row">
+        <ul>
+          <li class="col-xxs-12 col-xs-6 col-sm-4 col-md-3">
+            <h3>This is a column with a lot of text in</h3>
+          </li>
+          <li class="col-xxs-12 col-xs-6 col-sm-4 col-md-3">
+            <h3>This is a column with a lot of text in</h3>
+          </li>
+          <li class="col-xxs-12 col-xs-6 col-sm-4 col-md-3">
+            <h3>This is a column with a lot of text in</h3>
+          </li>
+          <li class="col-xxs-12 col-xs-6 col-sm-4 col-md-3">
+            <h3>This is a column with a lot of text in</h3>
+          </li>
+          <li class="col-xxs-12 col-xs-6 col-sm-4 col-md-3">
+            <h3>This is a column with a lot of text in</h3>
+          </li>
+          <li class="col-xxs-12 col-xs-6 col-sm-4 col-md-3">
+            <h3>This is a column with a lot of text in</h3>
+          </li>
+        </ul>
+      </div>
+    </div>
   </body>
 
   <script>
-    console.log('started application');
-    console.log(this);
-    console.log(BCCarousel);
+    var options = {
+      elem: document.getElementsByClassName('column-slider')[0],
+      bootstrapColClasses: 'col-xxs-12 col-xs-6 col-sm-4 col-md-3'
+    };
 
-    var bCCarousel = new BCCarousel();
-    console.log(bCCarousel);
+    var bCCarousel = new BCCarousel(options);
     bCCarousel.slide();
   </script>
 </html>

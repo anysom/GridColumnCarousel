@@ -17,6 +17,7 @@ var settings = {
   localhost:          '',
   baseDir:            'www/',
   scriptsDir:         'js/',
+  scriptName:         'BootstrapColumnCarousel.js',
   mainLessFile:       'BootstrapColumnCarousel.less',
   stylesDir:          'css/'
 };
@@ -56,10 +57,9 @@ gulp.task('views-updated', function() {
 gulp.task('javascript', function() {
   console.log('running task: javascript');
 
-  gulp.src(settings.scriptsDir+'**/*.js')
+  gulp.src(settings.scriptsDir+settings.scriptName)
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
-    //.pipe(ngAnnotate()) /*include this line only if using angular*/
     .on('error', handleError)
     .pipe(uglify({ mangle: true }))
     .pipe(rename('BootstrapColumnCarousel.min.js'))
@@ -79,9 +79,7 @@ gulp.task('less', function () {
 });
 
 gulp.task('default', ['javascript','less','browser-sync'], function() {
-  console.log('Gulp task started');
-
   gulp.watch(settings.baseDir+'**/*.html', ['views-updated']);
-  gulp.watch(settings.scriptsDir+'**/*.js', ['javascript']);
+  gulp.watch(settings.scriptsDir+settings.scriptName, ['javascript']);
   gulp.watch(settings.stylesDir+'**/*.less', ['less']);
 });
