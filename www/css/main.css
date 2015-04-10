@@ -1,0 +1,25 @@
+ul {
+  padding: 0;
+}
+
+/*styling to make the slides visible, but not part of the required styling*/
+.bootstrap-column-slider__list li h3 {
+  background: #ccc;
+  padding: 20px 0;
+}
+
+.bootstrap-column-slider__page-indicators {
+  list-style: none;
+}
+
+.bootstrap-column-slider__page-indicators li {
+  background: #eee;
+  padding: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.bootstrap-column-slider__page-indicators li.active {
+  background: #bbb;
+}

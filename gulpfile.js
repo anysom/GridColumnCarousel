@@ -6,7 +6,7 @@ var notify = require('gulp-notify'); //when on Windows 7 it falls back to Growl,
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
-var less = require('gulp-less');
+var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
 
@@ -18,7 +18,7 @@ var settings = {
   baseDir:            'www/',
   scriptsDir:         'js/',
   scriptName:         'BootstrapColumnCarousel.js',
-  mainLessFile:       'BootstrapColumnCarousel.less',
+  mainSassFile:       'BootstrapColumnCarousel.scss',
   stylesDir:          'css/'
 };
 
@@ -67,10 +67,9 @@ gulp.task('javascript', function() {
     .pipe(reload({stream:true}))
 });
 
-gulp.task('less', function () {
-  console.log('running task: less');
-  gulp.src(settings.stylesDir+settings.mainLessFile)
-    .pipe(less())
+gulp.task('sass', function () {
+  gulp.src(settings.stylesDir+settings.mainSassFile)
+    .pipe(sass())
     .on('error', handleError)
     .pipe(minifyCSS())
     .pipe(rename('BootstrapColumnCarousel.min.css'))
@@ -78,8 +77,8 @@ gulp.task('less', function () {
     .pipe(reload({stream: true}));
 });
 
-gulp.task('default', ['javascript','less','browser-sync'], function() {
+gulp.task('default', ['javascript','sass','browser-sync'], function() {
   gulp.watch(settings.baseDir+'**/*.html', ['views-updated']);
   gulp.watch(settings.scriptsDir+settings.scriptName, ['javascript']);
-  gulp.watch(settings.stylesDir+'**/*.less', ['less']);
+  gulp.watch(settings.stylesDir+'**/*.scss', ['sass']);
 });
