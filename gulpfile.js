@@ -9,7 +9,7 @@ var jshint = require('gulp-jshint');
 var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
-
+var copy = require('gulp-copy');
 
 /********************************************************/
 /* Settings and helper functions */
@@ -77,8 +77,15 @@ gulp.task('sass', function () {
     .pipe(reload({stream: true}));
 });
 
-gulp.task('default', ['javascript','sass','browser-sync'], function() {
+gulp.task('distribute', function () {
+  gulp.src([settings.scriptsDir+'BootstrapColumnCarousel.min.js', settings.stylesDir+'BootstrapColumnCarousel.min.css'])
+    .pipe(copy('dist', {
+      prefix: 2
+    }));
+});
+
+gulp.task('default', ['javascript','sass','distribute', 'browser-sync'], function() {
   gulp.watch(settings.baseDir+'**/*.html', ['views-updated']);
-  gulp.watch(settings.scriptsDir+settings.scriptName, ['javascript']);
-  gulp.watch(settings.stylesDir+'**/*.scss', ['sass']);
+  gulp.watch(settings.scriptsDir+settings.scriptName, ['javascript', 'distribute']);
+  gulp.watch(settings.stylesDir+'**/*.scss', ['sass', 'distribute']);
 });
