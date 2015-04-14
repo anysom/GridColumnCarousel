@@ -26,20 +26,20 @@
   function GCCarousel(options) {
     //Variables from options
     var
-      elem =                  options.elem || null,       //The column slider element.
-      gridColClasses =   (options.gridColClasses || 'col-md-6').split(' '),     //The grid column classes used on the items in the sliders
-      listElem =              options.listElem || elem.getElementsByClassName('grid-column-slider__list')[0],   //The list element
-      colItems =              options.colItems || listElem.getElementsByTagName('li'),     //A list of all the column items
-      throttleDelay =         options.throttleDelay || 50,      //The throttle delay used by the underscore/lodash throttle method
-      displayPageIndicators =     options.displayPageIndicators || true,    //display dots beneath the slider to indicate slider position
-      pageIndicatorsContainerElem =   options.pageIndicatorsContainerElem || elem.getElementsByClassName('grid-column-slider__page-indicators')[0];   //The class of the element that should contain the slider dots
+      elem =                        options.elem || null,       //The column carousel element.
+      gridColClasses =              (options.gridColClasses || '').split(' '),     //The grid column classes used on the items in the carousel
+      throttleDelay =               options.throttleDelay || 50,      //The throttle delay used by the underscore/lodash throttle method
+      displayPageIndicators =       (typeof options.displayPageIndicators !== 'undefined') ? options.displayPageIndicators : true,    //display dots beneath the carousel to indicate carousel position
+      pageIndicatorsContainerElem = options.pageIndicatorsContainerElem || elem.getElementsByClassName('grid-column-carousel__page-indicators')[0];   //The class of the element that should contain the carousel dots
 
     //private variables
     var refElem,
         colItemWidth,
         slideWidth,
         currentX = 0,
-        self = this;
+        self = this,
+        listElem = elem.getElementsByClassName('grid-column-carousel__list')[0],   //The list element
+        colItems = listElem.getElementsByTagName('li');     //A list of all the column items
 
     initialize();  
 
@@ -123,7 +123,7 @@
       if(displayPageIndicators) {
         initializeDots();
       }      
-      //to keep it simple i will reset the slider to initial position
+      //to keep it simple i will reset the carousel to initial position
       self.slide('first');
     }
     
@@ -167,7 +167,7 @@
       }
     };
     
-    //slides to a specific page in the slider, indicated by and number.
+    //slides to a specific page in the carousel, indicated by and number.
     //first page i index 0, and the nth page is index n.
     this.slideToPage = function(pageNumber) {
       //if slide to the first page, just set translateX to 0.
