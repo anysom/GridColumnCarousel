@@ -23,16 +23,16 @@
   }
 
   //Constructor
-  function BCCarousel(options) {
+  function GCCarousel(options) {
     //Variables from options
     var
       elem =                  options.elem || null,       //The column slider element.
-      bootstrapColClasses =   (options.bootstrapColClasses || 'col-md-6').split(' '),     //The bootstrap column classes used on the items in the sliders
-      listElem =              options.listElem || elem.getElementsByClassName('bootstrap-column-slider__list')[0],   //The list element
+      gridColClasses =   (options.gridColClasses || 'col-md-6').split(' '),     //The grid column classes used on the items in the sliders
+      listElem =              options.listElem || elem.getElementsByClassName('grid-column-slider__list')[0],   //The list element
       colItems =              options.colItems || listElem.getElementsByTagName('li'),     //A list of all the column items
       throttleDelay =         options.throttleDelay || 50,      //The throttle delay used by the underscore/lodash throttle method
       displayPageIndicators =     options.displayPageIndicators || true,    //display dots beneath the slider to indicate slider position
-      pageIndicatorsContainerElem =   options.pageIndicatorsContainerElem || elem.getElementsByClassName('bootstrap-column-slider__page-indicators')[0];   //The class of the element that should contain the slider dots
+      pageIndicatorsContainerElem =   options.pageIndicatorsContainerElem || elem.getElementsByClassName('grid-column-slider__page-indicators')[0];   //The class of the element that should contain the slider dots
 
     //private variables
     var refElem,
@@ -46,14 +46,14 @@
     //*****************Private functions*******************************************
     
     function initialize() {
-      //Create 'shadow' reference element with the same bootstrap classes as the list items.
+      //Create 'shadow' reference element with the same grid classes as the list items.
       //This item is unaffected by the increased size of the ul, and is therefore used to measure the width of the column items from.
       refElem = document.createElement('div');
       //add all boostrap column classes to the reference element
-      for(var i = 0; i < bootstrapColClasses.length; i++) {
-        refElem.classList.add(bootstrapColClasses[i]);  
+      for(var i = 0; i < gridColClasses.length; i++) {
+        refElem.classList.add(gridColClasses[i]);  
       }
-      refElem.classList.add('bootstrap-column-carousel__ref');
+      refElem.classList.add('grid-column-carousel__ref');
       elem.appendChild(refElem);
       
       initializeSize();
@@ -179,5 +179,5 @@
     };
   }
 
-  root.BCCarousel = BCCarousel;
+  root.GCCarousel = GCCarousel;
 })(this, (typeof _ === 'undefined' ? null : _));

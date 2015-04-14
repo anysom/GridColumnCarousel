@@ -17,8 +17,8 @@ var settings = {
   localhost:          '',
   baseDir:            'www/',
   scriptsDir:         'js/',
-  scriptName:         'BootstrapColumnCarousel.js',
-  mainSassFile:       'BootstrapColumnCarousel.scss',
+  scriptName:         'GridColumnCarousel.js',
+  mainSassFile:       'GridColumnCarousel.scss',
   stylesDir:          'css/'
 };
 
@@ -62,7 +62,7 @@ gulp.task('javascript', function() {
     .pipe(jshint.reporter('default'))
     .on('error', handleError)
     .pipe(uglify({ mangle: true }))
-    .pipe(rename('BootstrapColumnCarousel.min.js'))
+    .pipe(rename('GridColumnCarousel.min.js'))
     .pipe(gulp.dest(settings.scriptsDir))
     .pipe(reload({stream:true}))
 });
@@ -72,13 +72,13 @@ gulp.task('sass', function () {
     .pipe(sass())
     .on('error', handleError)
     .pipe(minifyCSS())
-    .pipe(rename('BootstrapColumnCarousel.min.css'))
+    .pipe(rename('GridColumnCarousel.min.css'))
     .pipe(gulp.dest(settings.stylesDir))
     .pipe(reload({stream: true}));
 });
 
 gulp.task('distribute', function () {
-  gulp.src([settings.scriptsDir+'BootstrapColumnCarousel.min.js', settings.stylesDir+'BootstrapColumnCarousel.min.css'])
+  gulp.src([settings.scriptsDir+'GridColumnCarousel.min.js', settings.stylesDir+'GridColumnCarousel.min.css'])
     .pipe(copy('dist', {
       prefix: 2
     }));
