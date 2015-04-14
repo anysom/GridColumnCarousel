@@ -8,6 +8,35 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    
+    /*styling to make the slides visible, but not part of the required styling*/    
+    <style>
+      ul {
+        padding: 0;
+      }
+
+      .grid-column-carousel__list li h3 {
+        background: #ccc;
+        padding: 20px 0;
+      }
+      
+      .grid-column-carousel__page-indicators {
+        list-style: none;
+      }
+      
+      .grid-column-carousel__page-indicators li {
+        background: #eee;
+        padding: 20px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 20px;
+      }
+      
+      .grid-column-carousel__page-indicators li.active {
+        background: #bbb;
+      }
+    </style>
+    
   </head>
   <body>
     <section class="page-header">
