@@ -1,4 +1,4 @@
-(function(root, _) {
+;(function(root, _) {
   'use strict';
   
   /*if underscore or lodash is not defined. Create fallback object with simple throttle method*/
@@ -146,8 +146,6 @@
     
     //Slide the carousel. Takes arguments, 'left', 'right', 'first' and 'last'.
     this.slide = function(direction) {
-      console.log('slide the carousel in direction:', direction);
-
       switch (direction) {
         case 'first':
           setX(0);
