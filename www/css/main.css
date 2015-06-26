@@ -2,7 +2,8 @@ ul {
   padding: 0;
 }
 
-/*styling to make the slides visible, but not part of the required styling*/
+/*Example styling to make the slides visible, 
+ but this IS NOT PART OF THE GridColumnCarousel styling*/
 .grid-column-carousel__list li h3 {
   background: #ccc;
   padding: 20px 0;

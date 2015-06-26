@@ -37,6 +37,8 @@
         colItemWidth,
         slideWidth,
         currentX = 0,
+        pagesCount = 0,
+        currentPage = 0,
         self = this,
         listElem = elem.getElementsByClassName('grid-column-carousel__list')[0],   //The list element
         colItems = listElem.getElementsByTagName('li');     //A list of all the column items
@@ -79,13 +81,9 @@
 
       //Get the width of a slide
       slideWidth = elem.getBoundingClientRect().width;
-    }
-    
-    function onIndicatorClick() {
-      //remove active class from old active element, and add to the clicked item
-      pageIndicatorsContainerElem.getElementsByClassName('active')[0].classList.remove('active');
-      this.classList.add('active');
-      self.slideToPage(getIndex(this));
+      
+      //Calculate how many pages are necessary
+      pagesCount = Math.ceil(colItems.length / (slideWidth / colItemWidth));
     }
     
     //gets the index of an li
@@ -96,12 +94,14 @@
       }
       return i;
     }
+    
+    function onIndicatorClick(e) {
+      self.slideToPage(getIndex(e.currentTarget));
+    }    
 
     //Creates the 'navigation dots'. Calculates how many items are visible pr slide,
     //and then how many navigation dots are necessary and injects them.
     function initializeDots() {
-      //Calculate how many pages are necessary
-      var pagesCount = colItems.length / (slideWidth / colItemWidth);
       //remove all items from the list add add a new list of items
       while (pageIndicatorsContainerElem.firstChild) {
           pageIndicatorsContainerElem.firstChild.removeEventListener('click', onIndicatorClick);
@@ -109,7 +109,7 @@
       }
       for (var i = 0; i < pagesCount; i++) {
         var indicator = document.createElement('li');
-        indicator.classList.add('indicator');
+        indicator.classList.add('grid-column-carousel__page-indicator');
         if(i === 0) {
           indicator.classList.add('active');
         }
@@ -148,19 +148,19 @@
     this.slide = function(direction) {
       switch (direction) {
         case 'first':
-          setX(0);
+          self.slideToPage(0);
           break;
         case 'last':
-          setX(0);
+          self.slideToPage(pagesCount - 1);
           break;
         case 'next':
-          setX(currentX -slideWidth);          
+          self.slideToPage(currentPage + 1);
           break;
         case 'prev':
-          setX(currentX +slideWidth);
+          self.slideToPage(currentPage - 1);
           break;
         default:
-          setX(0);
+          self.slideToPage(0);
           break;
       }
     };
@@ -168,12 +168,27 @@
     //slides to a specific page in the carousel, indicated by and number.
     //first page i index 0, and the nth page is index n.
     this.slideToPage = function(pageNumber) {
+      //ensure that pageNumber is not out of bounds
+      if(pageNumber < 0) {
+        pageNumber = 0;
+      } else if(pageNumber >= pagesCount) {
+        pageNumber = pagesCount - 1;
+      }
+      
+      //toggle active class on page indicators
+      if(displayPageIndicators) {
+        pageIndicatorsContainerElem.getElementsByClassName('active')[0].classList.remove('active');
+        pageIndicatorsContainerElem.getElementsByClassName('grid-column-carousel__page-indicator')[pageNumber].classList.add('active');
+      }     
+      
+      currentPage = pageNumber;
+      
       //if slide to the first page, just set translateX to 0.
       if(pageNumber === 0) {
         setX(0);
         return;
       }
-      setX(pageNumber * slideWidth * -1);
+      setX(pageNumber * slideWidth * -1);      
     };
   }
 

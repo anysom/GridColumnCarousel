@@ -37,6 +37,12 @@
           </ul>
         </div>
       </div>
+      
+      <!-- Button section to demonstrate the methods that can be called on the GCCarousel object -->
+      <button class="first">Go to First</button>
+      <button class="prev">Go to Prev</button>
+      <button class="next">Go to Next</button>
+      <button class="last">Go to Last</button>
     </div>
   </body>
 
@@ -47,7 +53,21 @@
         gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3'
       };
        
-      var gCCarousel = new GCCarousel(options);      
+      var gCCarousel = new GCCarousel(options);
+      
+      /* Demonstrate the different methods that can be called on the GCCarousel object */
+      document.querySelector('button.first').addEventListener('click', function() {
+        gCCarousel.slide('first');
+      });
+      document.querySelector('button.prev').addEventListener('click', function() {
+        gCCarousel.slide('prev');
+      });
+      document.querySelector('button.next').addEventListener('click', function() {
+        gCCarousel.slide('next');
+      });
+      document.querySelector('button.last').addEventListener('click', function() {
+        gCCarousel.slide('last');
+      });
     };
   </script>
 </html>

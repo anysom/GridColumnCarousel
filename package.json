@@ -1,11 +1,11 @@
 {
-  "name": "BootstrapColumnCarousel",
-  "version": "1.0.0",
-  "description": "Carousel that supports multiple bootstrap columns",
+  "name": "GridColumnCarousel",
+  "version": "1.1.0",
+  "description": "Carousel that supports multiple grid columns",
   "main": "gulpfile.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anysom/BootstrapColumnCarousel.git"
+    "url": "https://github.com/anysom/GridColumnCarousel.git"
   },
   "keywords": [
     "Bootstrap",
@@ -15,9 +15,9 @@
   "author": "Anders Nysom",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/anysom/BootstrapColumnCarousel/issues"
+    "url": "https://github.com/anysom/GridColumnCarousel/issues"
   },
-  "homepage": "https://github.com/anysom/BootstrapColumnCarousel",
+  "homepage": "http://anysom.github.io/GridColumnCarousel/",
   "dependencies": {
     "browser-sync": "^1.6.5",
     "gulp": "^3.8.10",
