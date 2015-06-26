@@ -24,3 +24,7 @@ ul {
 .grid-column-carousel__page-indicators li.active {
   background: #bbb;
 }
+
+.button-panel {
+  margin-top: 30px;
+}

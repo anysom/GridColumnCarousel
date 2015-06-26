@@ -39,10 +39,16 @@
       </div>
       
       <!-- Button section to demonstrate the methods that can be called on the GCCarousel object -->
-      <button class="first">Go to First</button>
-      <button class="prev">Go to Prev</button>
-      <button class="next">Go to Next</button>
-      <button class="last">Go to Last</button>
+      <div class="button-panel">
+        <button class="first">Go to First</button>
+        <button class="prev">Go to Prev</button>
+        <button class="next">Go to Next</button>
+        <button class="last">Go to Last</button>
+      </div>
+      <div class="button-panel">
+        <input class="to-page-input" type="text" placeholder="slide index">
+        <button class="to-page">Go to Slide</button>
+      </div>
     </div>
   </body>
 
@@ -50,7 +56,8 @@
     window.onload = function() {
       var options = {
         elem: document.getElementsByClassName('grid-column-carousel')[0],
-        gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3'
+        gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
+        autoplay: true
       };
        
       var gCCarousel = new GCCarousel(options);
@@ -67,6 +74,10 @@
       });
       document.querySelector('button.last').addEventListener('click', function() {
         gCCarousel.slide('last');
+      });
+      document.querySelector('button.to-page').addEventListener('click', function() {
+        var pageIndex = parseInt(document.querySelector('.to-page-input').value);
+        gCCarousel.slide(pageIndex);
       });
     };
   </script>

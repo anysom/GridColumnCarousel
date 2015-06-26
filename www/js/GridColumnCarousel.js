@@ -18,7 +18,7 @@
             }, wait);
           }
         };
-      }
+      },
     };
   }
 
@@ -28,6 +28,8 @@
     var
       elem =                        options.elem || null,       //The column carousel element.
       gridColClasses =              (options.gridColClasses || '').split(' '),     //The grid column classes used on the items in the carousel
+      autoplay =                    options.autoplay || false,        //Dictates wether GCCarousel will loop through the pages automatically
+      autoplayDelay =               options.autoplayDelay || 5000,    //Dictates the wait time between automatically changing pages.
       throttleDelay =               options.throttleDelay || 50,      //The throttle delay used by the underscore/lodash throttle method
       displayPageIndicators =       (typeof options.displayPageIndicators !== 'undefined') ? options.displayPageIndicators : true,    //display dots beneath the carousel to indicate carousel position
       pageIndicatorsContainerElem = options.pageIndicatorsContainerElem || elem.getElementsByClassName('grid-column-carousel__page-indicators')[0];   //The class of the element that should contain the carousel dots
@@ -35,6 +37,7 @@
     //private variables
     var refElem,
         colItemWidth,
+        delayedSlide = null,
         slideWidth,
         currentX = 0,
         pagesCount = 0,
@@ -43,8 +46,11 @@
         listElem = elem.getElementsByClassName('grid-column-carousel__list')[0],   //The list element
         colItems = listElem.getElementsByTagName('li');     //A list of all the column items
 
-    initialize();  
+    initialize();
 
+    if(autoplay) {
+      setAutomaticSlideChange();
+    }
     //*****************Private functions*******************************************
     
     function initialize() {
@@ -127,6 +133,17 @@
       self.slide('first');
     }
     
+    function setAutomaticSlideChange() {
+      if(delayedSlide) {
+        clearTimeout(delayedSlide);
+      }
+      
+      delayedSlide = setTimeout(function() {
+        self.slide('next');
+        delayedSlide = null;
+      }, autoplayDelay);
+    }
+    
     function getTranslateValue() {
       var value = listElem.style.transform;
       
@@ -142,37 +159,14 @@
       listElem.style.transform = 'translateX('+x+'px)';
     }
     
-    //*****************Public functions*******************************************
-    
-    //Slide the carousel. Takes arguments, 'left', 'right', 'first' and 'last'.
-    this.slide = function(direction) {
-      switch (direction) {
-        case 'first':
-          self.slideToPage(0);
-          break;
-        case 'last':
-          self.slideToPage(pagesCount - 1);
-          break;
-        case 'next':
-          self.slideToPage(currentPage + 1);
-          break;
-        case 'prev':
-          self.slideToPage(currentPage - 1);
-          break;
-        default:
-          self.slideToPage(0);
-          break;
-      }
-    };
-    
-    //slides to a specific page in the carousel, indicated by and number.
-    //first page i index 0, and the nth page is index n.
-    this.slideToPage = function(pageNumber) {
+    //slides to a specific page in the carousel, indicated by a number.
+    //first page i index 0, and the nth page is index n-1.
+    function slideToPage(pageNumber) {
       //ensure that pageNumber is not out of bounds
       if(pageNumber < 0) {
-        pageNumber = 0;
-      } else if(pageNumber >= pagesCount) {
         pageNumber = pagesCount - 1;
+      } else if(pageNumber >= pagesCount) {
+        pageNumber = 0;
       }
       
       //toggle active class on page indicators
@@ -183,12 +177,48 @@
       
       currentPage = pageNumber;
       
+      //if autoplay is set, start automatic slide change. This will cancel any previously
+      //set waiting slide change.
+      if(autoplay) {
+        setAutomaticSlideChange();
+      }
+      
       //if slide to the first page, just set translateX to 0.
       if(pageNumber === 0) {
         setX(0);
+      } else {
+        setX(pageNumber * slideWidth * -1);
+      }      
+    }
+    
+    //*****************Public functions*******************************************
+    
+    //Slide the carousel. Takes arguments, 'left', 'right', 'first' and 'last'.
+    //It is also possible to pass a number argument, to indicate which page to scroll to.
+    this.slide = function(page) {
+      //if argument is number, call slideToPage directly
+      if(typeof page === 'number') {
+        slideToPage(page);
         return;
       }
-      setX(pageNumber * slideWidth * -1);      
+      
+      switch (page) {
+        case 'first':
+          slideToPage(0);
+          break;
+        case 'last':
+          slideToPage(pagesCount - 1);
+          break;
+        case 'next':
+          slideToPage(currentPage + 1);
+          break;
+        case 'prev':
+          slideToPage(currentPage - 1);
+          break;
+        default:
+          slideToPage(0);
+          break;
+      }
     };
   }
 
