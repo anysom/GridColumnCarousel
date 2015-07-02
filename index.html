@@ -59,8 +59,8 @@
 GridColumnCarousel lets you scroll columns that scale up and down with your responsive grid. When your grid system hits breakpoints and changes the amount of columns you have pr page, GridColumnCarousel will automatically change the number of columns per slide.</p>
 <p>The script is implemented and maintained by <a href="https://github.com/anysom">anysom</a></p>
 
-<h3>Example</h3>
-<div class="grid-column-carousel row">
+<strong>Example 1</strong>
+<div class="grid-column-carousel row example-1">
   <ul class="grid-column-carousel__list">
     <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <h3>1 This is a column with a lot of text in</h3>
@@ -87,16 +87,6 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
     </ul>
   </div>
 </div>
-<script>
-    window.onload = function() {
-      var options = {
-        elem: document.getElementsByClassName('grid-column-carousel')[0],
-        gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3'
-      };
-       
-      var gCCarousel = new GCCarousel(options);      
-    };
-  </script>
 
 <h3>But how do I do it?!!?</h3>
 <p>Do not stress my friend, it is as simple as ****** your own ***...</p>
@@ -106,7 +96,7 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
 <p>Please <strong>note</strong> that in the example below, I use some Bootstrap specific classes, but these could be whatever grid you want.</p>
 <pre>
   <code>
-    &lt;div class="grid-column-carousel row"&gt;
+    &lt;div class="grid-column-carousel row example-1"&gt;
       &lt;ul class="grid-column-carousel__list"&gt;
         &lt;li class="col-xs-12 col-sm-6 col-md-4 col-lg-3"&gt;
           &lt;h3&gt;1 This is a column with a lot of text in&lt;/h3&gt;
@@ -146,7 +136,7 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
     &lt;script&gt;
       window.onload = function() {
         var options = {
-          elem: document.getElementsByClassName('grid-column-slider')[0],
+          elem: document.getElementsByClassName('example-1')[0],
           gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3'
         };
          
@@ -156,6 +146,61 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
   </code>
 </pre>
 
+
+<h3>Going pro!</h3>
+<p>Okay lets crank this sucker up a bit and supply some buttons we can use to control the slider.</p>
+<strong>Example 2</strong>
+<div class="grid-column-carousel row example-2">
+  <ul class="grid-column-carousel__list">
+    <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <img src="http://lorempixel.com/300/200/sports" alt="">
+    </li>
+    <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <img src="http://lorempixel.com/300/200/food" alt="">
+    </li>
+    <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <img src="http://lorempixel.com/300/200/people" alt="">
+    </li>
+    <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <img src="http://lorempixel.com/300/200/technics" alt="">
+    </li>
+    <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <img src="http://lorempixel.com/300/200/nature" alt="">
+    </li>
+    <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <img src="http://lorempixel.com/300/200/transport" alt="">
+    </li>
+  </ul>
+  <div class="grid-column-carousel__page-indicators">
+    <ul>
+        <li class="dot active"></li>
+    </ul>
+  </div>
+</div>
+<script>
+    window.onload = function() {
+      //initialize example 1
+      var options = {
+        elem: document.getElementsByClassName('example-1')[0],
+        gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3'
+      };
+       
+      var gCCarousel = new GCCarousel(options);
+      
+      
+      //initialize example 2
+      var optionsEx2 = {
+        elem: document.getElementsByClassName('example-2')[0],
+        gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3'
+      };
+       
+      var gCCarouselEx2 = new GCCarousel(optionsEx2);
+    };
+</script>
+
+<h3>Configuration</h3>
+<p>For fiddling and fine tuning, I have supplied the following settings you can pass in the options object.</p>
+
 <h3>
 <a id="works-with-your-favorite-grid-system" class="anchor" href="#works-with-your-favorite-grid-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>Works with your favorite grid system</h3>
 
@@ -163,11 +208,11 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
 <ul>
   <li><p>Bootstrap</p></li>
   <li><p>Foundation</p></li>
-  <li><p>Your own grid</p></li>
+  <li><p>Your own amazing grid</p></li>
 </ul>
 <p>Theres no end to the possibilities (I hope).. Woop woop, let the party begin!</p>
 
-<h3>No dependence upon third party libraries</h3>
+<h3>No dependency upon third party libraries</h3>
 <p>The GridColumnCarousel is written in pure javascript, and as such does not rely on jQuery, Underscore, Lodash or other libraries..</p>
 
 
