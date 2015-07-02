@@ -39,6 +39,20 @@
       .grid-column-carousel__page-indicators li.active {
         background: #bbb;
       }
+      
+      .button-panel {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      
+      .button-panel > * {
+        margin: 0 10px;
+      }
+      
+      .button-panel input {
+        width: 100px;
+        height: 33px;
+      }
     </style>
     
   </head>
@@ -148,7 +162,9 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
 
 
 <h3>Going pro!</h3>
-<p>Okay lets crank this sucker up a bit and supply some buttons we can use to control the slider.</p>
+<p>Okay lets crank this sucker up a bit and supply some buttons we can use to <strong>control the slider</strong>. Just hook your buttons up to calling the <strong>slide()</strong> function on your GCCarousel instance - and woopti magic will happen. The slide method takes one argument that can be either: <i>'next', 'prev', 'first', 'last'</i> or a zero based integer to indicate the page you want to slide to.</p>
+
+<p><i>I would not recommend navigating to a page by index though, as you can never be sure of the indexes across different screen sizes</i></p>
 <strong>Example 2</strong>
 <div class="grid-column-carousel row example-2">
   <ul class="grid-column-carousel__list">
@@ -177,6 +193,20 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
     </ul>
   </div>
 </div>
+<!-- Button section to demonstrate the methods that can be called on the GCCarousel object -->
+<div class="button-panel">
+  <button class="first">Go to First</button>
+  <button class="prev">Go to Prev</button>
+  <button class="next">Go to Next</button>
+  <button class="last">Go to Last</button>
+</div>
+<div class="button-panel">
+  <input class="to-page-input" type="text" placeholder="slide index">
+  <button class="to-page">Go to Slide</button>
+</div>
+
+<p></p>
+
 <script>
     window.onload = function() {
       //initialize example 1
@@ -195,6 +225,24 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
       };
        
       var gCCarouselEx2 = new GCCarousel(optionsEx2);
+      
+      /* Demonstrate the different methods that can be called on the GCCarousel object */
+      document.querySelector('button.first').addEventListener('click', function() {
+        gCCarouselEx2.slide('first');
+      });
+      document.querySelector('button.prev').addEventListener('click', function() {
+        gCCarouselEx2.slide('prev');
+      });
+      document.querySelector('button.next').addEventListener('click', function() {
+        gCCarouselEx2.slide('next');
+      });
+      document.querySelector('button.last').addEventListener('click', function() {
+        gCCarouselEx2.slide('last');
+      });
+      document.querySelector('button.to-page').addEventListener('click', function() {
+        var pageIndex = parseInt(document.querySelector('.to-page-input').value);
+        gCCarouselEx2.slide(pageIndex);
+      })
     };
 </script>
 
