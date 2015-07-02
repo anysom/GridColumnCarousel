@@ -26,6 +26,7 @@
       
       .grid-column-carousel__page-indicators {
         list-style: none;
+        text-align: center;
       }
       
       .grid-column-carousel__page-indicators li {
@@ -52,6 +53,48 @@
       .button-panel input {
         width: 100px;
         height: 33px;
+      }
+      
+      .options-list {
+        padding: 40px;
+        background: #fafafa;
+        margin: 0;
+        font-size: 13px;
+      }
+      
+      .option {
+        list-style: none;
+        margin: 0;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #eee;
+      }
+      
+      .option:last-child {
+        border-bottom: none;
+      }
+      
+      .option .option-name {
+        width: 250px;
+        -webkit-flex-shrink: 0;
+        -ms-flex-negative: 0;
+        flex-shrink: 0;
+      }
+      
+      .option .description {
+        -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        -webkit-flex-shrink: 1;
+        -ms-flex-negative: 1;
+        flex-shrink: 1;
       }
     </style>
     
@@ -140,7 +183,7 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
   </code>
 </pre>
 
-<p>Then include the script, and initialize the GCCarousel with your options. As a minimum you must supply a javascript object representing your slider, and the class list that defines the grid on your items in the slider.</p>
+<p>Then include the script, and initialize the GCCarousel with your options. Check out the full set of <a href="#configuration">OPTIONS</a>. As a minimum you must supply a javascript object representing your slider, and the class list that defines the grid on your items in the slider.</p>
 <pre>
   <code>
     &lt;!-- Include the script--&lt;
@@ -162,9 +205,10 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
 
 
 <h3>Going pro!</h3>
-<p>Okay lets crank this sucker up a bit and supply some buttons we can use to <strong>control the slider</strong>. Just hook your buttons up to calling the <strong>slide()</strong> function on your GCCarousel instance - and woopti magic will happen. The slide method takes one argument that can be either: <i>'next', 'prev', 'first', 'last'</i> or a zero based integer to indicate the page you want to slide to.</p>
+<p>Okay lets crank this sucker up a bit and supply some buttons we can use to <strong>control the slider</strong>. Just hook your buttons up to calling the <strong>slide()</strong> function on your GCCarousel instance - and woopti doo, magic will happen. The slide method takes one argument that can be either: <i>'next', 'prev', 'first', 'last'</i> or a zero based integer to indicate the page you want to slide to.</p>
 
 <p><i>I would not recommend navigating to a page by index though, as you can never be sure of the indexes across different screen sizes</i></p>
+</br>
 <strong>Example 2</strong>
 <div class="grid-column-carousel row example-2">
   <ul class="grid-column-carousel__list">
@@ -205,9 +249,143 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
   <button class="to-page">Go to Slide</button>
 </div>
 
+</br>
+<p>Using the same markup as before, here is how you can hook your buttons up and change pages on the carousel.</p>
+
+<pre>
+  <code>
+    &lt;!-- Include the script--&lt;
+    &lt;script src="js/GridColumnCarousel.js"&gt;&lt;/script&gt;
+    
+    &lt;!-- initialize the carousel --&gt;
+    &lt;script&gt;
+      window.onload = function() {
+       
+       //instantiate the GCCarousel as previous example
+        var options = {
+          elem: document.getElementsByClassName('example-1')[0],
+          gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3'
+        };
+         
+        var gCCarousel = new GCCarousel(options);
+        
+       //add click handlers to the buttons and call slide method on the GCCarousel instance. document.querySelector('button.first').addEventListener('click', function() {
+        gCCarouselEx2.slide('first');
+      });
+      document.querySelector('button.prev').addEventListener('click', function() {
+        gCCarouselEx2.slide('prev');
+      });
+      document.querySelector('button.next').addEventListener('click', function() {
+        gCCarouselEx2.slide('next');
+      });
+      document.querySelector('button.last').addEventListener('click', function() {
+        gCCarouselEx2.slide('last');
+      });
+      document.querySelector('button.to-page').addEventListener('click', function() {
+        var pageIndex = parseInt(document.querySelector('.to-page-input').value);
+        gCCarouselEx2.slide(pageIndex);
+      })
+      };
+    &lt;/script&gt;
+  </code>
+</pre>
+
+
 <p></p>
 
-<script>
+<h3 id="configuration">Configuration</h3>
+<p>For fiddling and fine tuning, I have supplied the following settings you can pass in the options object.</p>
+<ul class="options-list">
+  <li class="option">
+    <div class="option-name"><strong>elem</strong></div>
+    <div class="description">
+      <p>The column carousel element. Must be a native JS DOM object, NOT a jQuery wrapped object.</p>
+      <div class="default-value">
+        <strong>Required</strong>
+      </div>
+    </div>
+  </li>
+  <li class="option">
+    <div class="option-name"><strong>gridColClasses</strong></div>
+    <div class="description">
+      <p>The grid column classes used on the items in the carousel. expects a string of space separated class names, like 'col-xs-12 col-sm-6 col-md-4 col-lg-3'.</p>
+      <div class="default-value">
+        <strong>Required</strong>
+      </div>
+    </div>
+  </li>
+  <li class="option">
+    <div class="option-name"><strong>autoplay</strong></div>
+    <div class="description">
+      <p>Dictates wether GCCarousel will loop through the pages automatically. Expects a boolean value.</p>
+      <div class="default-value">
+        <p><strong>optional - </strong> defaults to false</p>
+      </div>
+    </div>
+  </li>
+  <li class="option">
+    <div class="option-name"><strong>autoplayDelay</strong></div>
+    <div class="description">
+      <p>If autoplay is enabled, it will dictate the wait time between automatically changing pages. Expects a number value in miliseconds</p>
+      <div class="default-value">
+        <p><strong>optional - </strong> defaults to 5000 (5 seconds)</p>
+      </div>
+    </div>
+  </li>
+  <li class="option">
+    <div class="option-name"><strong>throttleDelay</strong></div>
+    <div class="description">
+      <p>The throttle delay used by the underscore/lodash throttle method, for recalculating the column and page widths on page resize. Expects a number value in miliseconds. A lower value will result in smoother resizing, but lower performance.</p>
+      <div class="default-value">
+        <p><strong>optional - </strong> defaults to 50</p>
+      </div>
+    </div>
+  </li>
+  <li class="option">
+    <div class="option-name"><strong>displayPageIndicators</strong></div>
+    <div class="description">
+      <p>Display indicators beneath the carousel to indicate carousel position.</p>
+      <div class="default-value">
+        <p><strong>optional - </strong> defaults to true</p>
+      </div>
+    </div>
+  </li>
+  <li class="option">
+    <div class="option-name"><strong>pageIndicatorsContainerElem</strong></div>
+    <div class="description">
+      <p>The class name of the element that should contain the carousel indicators.</p>
+      <div class="default-value">
+        <p><strong>optional - </strong> defaults to 'grid-column-carousel__page-indicators'</p>
+      </div>
+    </div>
+  </li>
+</ul>
+
+<h3>
+<a id="works-with-your-favorite-grid-system" class="anchor" href="#works-with-your-favorite-grid-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>Works with your favorite grid system</h3>
+
+<p>GridColumnCarousel is grid system agnositc, and therefore you can use it with whichever grid system you like.</p>
+<ul>
+  <li><p>Bootstrap</p></li>
+  <li><p>Foundation</p></li>
+  <li><p>Your own amazing grid</p></li>
+</ul>
+<p>Theres no end to the possibilities (I hope).. Woop woop, let the party begin!</p>
+
+<h3>No dependency upon third party libraries</h3>
+<p>The GridColumnCarousel is written in pure javascript, and as such does not rely on jQuery, Underscore, Lodash or other libraries..</p>
+
+
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/anysom/GridColumnCarousel">Grid Column Carousel</a> is maintained by <a href="https://github.com/anysom">anysom</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+    
+    <script>
     window.onload = function() {
       //initialize example 1
       var options = {
@@ -245,33 +423,6 @@ GridColumnCarousel lets you scroll columns that scale up and down with your resp
       })
     };
 </script>
-
-<h3>Configuration</h3>
-<p>For fiddling and fine tuning, I have supplied the following settings you can pass in the options object.</p>
-
-<h3>
-<a id="works-with-your-favorite-grid-system" class="anchor" href="#works-with-your-favorite-grid-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>Works with your favorite grid system</h3>
-
-<p>GridColumnCarousel is grid system agnositc, and therefore you can use it with whichever grid system you like.</p>
-<ul>
-  <li><p>Bootstrap</p></li>
-  <li><p>Foundation</p></li>
-  <li><p>Your own amazing grid</p></li>
-</ul>
-<p>Theres no end to the possibilities (I hope).. Woop woop, let the party begin!</p>
-
-<h3>No dependency upon third party libraries</h3>
-<p>The GridColumnCarousel is written in pure javascript, and as such does not rely on jQuery, Underscore, Lodash or other libraries..</p>
-
-
-
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/anysom/GridColumnCarousel">Grid Column Carousel</a> is maintained by <a href="https://github.com/anysom">anysom</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
 
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
