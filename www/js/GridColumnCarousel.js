@@ -99,10 +99,6 @@
         if (node == childs[i]) break;
       }
       return i;
-    }
-    
-    function onIndicatorClick(e) {
-      self.slideToPage(getIndex(e.currentTarget));
     }    
 
     //Creates the 'navigation dots'. Calculates how many items are visible pr slide,
@@ -189,6 +185,10 @@
       } else {
         setX(pageNumber * slideWidth * -1);
       }      
+    }
+    
+    function onIndicatorClick(e) {
+      slideToPage(getIndex(e.currentTarget));
     }
     
     //*****************Public functions*******************************************
