@@ -96,7 +96,7 @@
     function getIndex(node) {
       var childs = node.parentNode.childNodes;
       for (var i = 0; i < childs.length; i++) {
-        if (node == childs[i]) break;
+        if (node === childs[i]) break;
       }
       return i;
     }    
@@ -138,16 +138,6 @@
         self.slide('next');
         delayedSlide = null;
       }, autoplayDelay);
-    }
-    
-    function getTranslateValue() {
-      var value = listElem.style.transform;
-      
-      if(value === "") {
-        return 0;
-      }
-      
-      return value.split('(')[1].split('p')[0];
     }
     
     function setX(x) {
@@ -223,4 +213,4 @@
   }
 
   root.GCCarousel = GCCarousel;
-})(this, (typeof _ === 'undefined' ? null : _));
+})(this, (typeof window._ === 'undefined' ? null : window._));

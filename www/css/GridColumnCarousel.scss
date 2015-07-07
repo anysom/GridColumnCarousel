@@ -4,8 +4,8 @@
 
 .grid-column-carousel__list {
   transition: transform 0.5s ease-in-out;
-  transform: translateX(0);
-  
+  -webkit-transform: translateX(0);
+  transform: translateX(0);  
   
   //clearfix styling
   &:after, &:before {
