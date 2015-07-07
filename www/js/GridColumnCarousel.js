@@ -142,6 +142,8 @@
     
     function setX(x) {
       currentX = x;
+      listElem.style.WebkitTransform = 'translateX('+x+'px)';
+      listElem.style.msTransform = 'translateX('+x+'px)';
       listElem.style.transform = 'translateX('+x+'px)';
     }
     
