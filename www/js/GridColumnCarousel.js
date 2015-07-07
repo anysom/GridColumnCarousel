@@ -140,18 +140,10 @@
       }, autoplayDelay);
     }
     
-    function getTranslateValue() {
-      var value = listElem.style.transform;
-      
-      if(value === "") {
-        return 0;
-      }
-      
-      return value.split('(')[1].split('p')[0];
-    }
-    
     function setX(x) {
       currentX = x;
+      listElem.style.WebkitTransform = 'translateX('+x+'px)';
+      listElem.style.msTransform = 'translateX('+x+'px)';
       listElem.style.transform = 'translateX('+x+'px)';
     }
     
@@ -223,4 +215,4 @@
   }
 
   root.GCCarousel = GCCarousel;
-})(this, (typeof _ === 'undefined' ? null : _));
+})(this, (typeof window._ === 'undefined' ? null : window._));
