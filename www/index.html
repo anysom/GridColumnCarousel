@@ -5,12 +5,25 @@
     <link href="css/GridColumnCarousel.min.css" rel="stylesheet" type="text/css">
 
     <script src="js/GridColumnCarousel.js"></script>
+    
+    <style>
+      .resizing-container {
+        background: aqua;
+        transition: width 0.5s ease-in-out;
+        width: 100%;
+      }
+      
+      .small-container {
+        width: 70%;
+      }
+    </style>
   </head>
   <body>
     <h1>Grid Column Carousel - demonstration</h1>
 
     <div class="container">
-      <div class="grid-column-carousel row">
+     <div class="resizing-container row">
+      <div class="grid-column-carousel">
         <ul class="grid-column-carousel__list">
           <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
             <h3>1 This is a column with a lot of text in</h3>
@@ -36,8 +49,8 @@
               <li class="dot active"></li>
           </ul>
         </div>
-      </div>
-      
+      </div>      
+     </div>
       <!-- Button section to demonstrate the methods that can be called on the GCCarousel object -->
       <div class="button-panel">
         <button class="first">Go to First</button>
@@ -49,6 +62,9 @@
         <input class="to-page-input" type="text" placeholder="slide index">
         <button class="to-page">Go to Slide</button>
       </div>
+      <div class="button-panel">
+        <button class="resize-container">resize container</button>
+      </div>
     </div>
   </body>
 
@@ -57,7 +73,7 @@
       var options = {
         elem: document.getElementsByClassName('grid-column-carousel')[0],
         gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
-        autoplay: true
+        autoplay: false
       };
        
       var gCCarousel = new GCCarousel(options);
@@ -78,6 +94,22 @@
       document.querySelector('button.to-page').addEventListener('click', function() {
         var pageIndex = parseInt(document.querySelector('.to-page-input').value);
         gCCarousel.slide(pageIndex);
+      });
+      document.querySelector('button.resize-container').addEventListener('click', function() {
+        var container = document.querySelector('.resizing-container');
+        
+        //tell the carousel to start watching for resizing.
+        //OPTIONALLY pass a variable to the start method to tell it when to stop again
+        //OR call the stop method manually when done.
+        gCCarousel.startWatchManualResize(600);
+        
+        //resize the container..
+        container.classList.add('small-container');
+        
+        //when the resizing is done, tell the carousel to stop wathcing for resizing.
+        /*setTimeout(function() {
+          gCCarousel.endWatchManualResize();  
+        }, 600);*/
       });
     };
   </script>

@@ -43,6 +43,7 @@
         pagesCount = 0,
         currentPage = 0,
         self = this,
+        ManualResizeIntervalID,
         listElem = elem.getElementsByClassName('grid-column-carousel__list')[0],   //The list element
         colItems = listElem.getElementsByTagName('li');     //A list of all the column items
 
@@ -121,6 +122,7 @@
     }
 
     function reinitialize() {
+      console.log('reinitialize');
       initializeSize();
       if(displayPageIndicators) {
         initializeDots();
@@ -212,6 +214,28 @@
           break;
       }
     };
+    
+    
+    //This method is used to manually to trigger a periodic resizing of the carousel. 
+    //The same resizing that happens when a window 'resize' event occurs.
+    //This method should be used when the container the carousel lives in changes size based on something else than window resize.
+    this.startWatchManualResize = function(duration) {
+      ManualResizeIntervalID = setInterval(reinitialize, throttleDelay);
+      
+      if (duration && typeof duration == 'number') {
+        setTimeout(function() {
+          clearInterval(ManualResizeIntervalID);
+        }, duration);
+      }
+    };
+    
+    //Ends the periodic resizing from 'startWatchResize'
+    this.endWatchManualResize = function() {
+      clearInterval(ManualResizeIntervalID);
+    };
+    
+    //a single call to the reinitialize function
+    this.reinitialize = reinitialize;
   }
 
   root.GCCarousel = GCCarousel;
