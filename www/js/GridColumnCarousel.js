@@ -97,7 +97,7 @@
     function getIndex(node) {
       var childs = node.parentNode.childNodes;
       for (var i = 0; i < childs.length; i++) {
-        if (node == childs[i]) break;
+        if (node === childs[i]) break;
       }
       return i;
     }    

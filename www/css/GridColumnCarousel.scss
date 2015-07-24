@@ -3,9 +3,10 @@
 }
 
 .grid-column-carousel__list {
-  transition: transform 0.5s ease-in-out;
   transform: translateX(0);
-  
+  -webkit-transform: translateX(0);
+  transition: transform 0.5s ease-in-out;
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
   
   //clearfix styling
   &:after, &:before {
