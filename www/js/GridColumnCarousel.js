@@ -74,7 +74,7 @@
       listElem.classList.add('initialized');
 
       //When the window resizes recalculate the width of the carousel
-      window.addEventListener('resize', _.throttle(reinitializeSize, throttleDelay, {'leading': true}));
+      window.addEventListener('resize', _.throttle(recalculateSize, throttleDelay, {'leading': true}));
 
       //start automatic slideing if set
       if(autoplay) {
@@ -142,8 +142,7 @@
       }
     }
 
-    function reinitializeSize() {
-      console.log('reinitializeSize');
+    function recalculateSize() {
       initializeSize();
       if(displayPageIndicators) {
         initializeDots();
@@ -249,7 +248,7 @@
     //The same resizing that happens when a window 'resize' event occurs.
     //This method should be used when the container the carousel lives in changes size based on something else than window resize.
     this.startWatchManualResize = function(duration) {
-      ManualResizeIntervalID = setInterval(reinitializeSize, throttleDelay);
+      ManualResizeIntervalID = setInterval(recalculateSize, throttleDelay);
 
       if (duration && typeof duration == 'number') {
         setTimeout(function() {
@@ -263,13 +262,13 @@
       clearInterval(ManualResizeIntervalID);
     };
 
-    //a single call to the reinitializeSize function.
+    //a single call to the recalculateSize function.
     //This will make sure that the size of pages and columns are recalculated.
-    this.reinitializeSize = reinitializeSize;
+    this.recalculateSize = recalculateSize;
 
     //This will reinstantiate the entire carousel. Remove old state and find
     //list items and calculating item sizes.
-    this.reinstantiate = reinstantiate;
+    this.reinitialize = reinitialize;
   }
 
   w.GCCarousel = GCCarousel;
