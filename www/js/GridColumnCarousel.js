@@ -202,6 +202,14 @@
       }
     }
 
+    //will slide to the page that currently displays the element indicated by the index
+    function slideToElementIndex(index) {
+        //find out which page the element is presented on.
+        var itemsPrSlide = slideWidth / colItemWidth;
+        var pageIndex = Math.floor(index / itemsPrSlide);
+        slideToPage(pageIndex);
+    }
+
     function onIndicatorClick(e) {
       slideToPage(getIndex(e.currentTarget));
     }
@@ -213,7 +221,7 @@
     this.slide = function(page) {
       //if argument is number, call slideToPage directly
       if(typeof page === 'number') {
-        slideToPage(page);
+        slideToElementIndex(page);
         return;
       }
 
@@ -261,7 +269,7 @@
 
     //This will reinstantiate the entire carousel. Remove old state and find
     //list items and calculating item sizes.
-    this.reinitialize = reinitialize;
+    this.reinstantiate = reinstantiate;
   }
 
   w.GCCarousel = GCCarousel;
