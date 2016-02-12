@@ -1,16 +1,16 @@
-;(function(root, _) {
+;(function(w, _) {
   'use strict';
-  
+
   /*if underscore or lodash is not defined. Create fallback object with simple throttle method*/
   if(!_) {
     _ = {
       throttle: function(func, wait) {
         var timer = null;
-        
+
         return function() {
-          var context = this, 
+          var context = this,
               args = arguments;
-          
+
           if(timer === null) {
             timer = setTimeout(function() {
               func.apply(context, args);
@@ -44,37 +44,58 @@
         currentPage = 0,
         self = this,
         ManualResizeIntervalID,
-        listElem = elem.getElementsByClassName('grid-column-carousel__list')[0],   //The list element
-        colItems = listElem.getElementsByTagName('li');     //A list of all the column items
+        listElem = elem.querySelector('.grid-column-carousel__list'),   //The list element
+        colItems; //A list of all the column items
 
     initialize();
+    console.log(colItems);
 
-    if(autoplay) {
-      setAutomaticSlideChange();
-    }
     //*****************Private functions*******************************************
-    
+
     function initialize() {
+      colItems = listElem.querySelectorAll('li:not([data-gcc-ignore])');
+
       //Create 'shadow' reference element with the same grid classes as the list items.
       //This item is unaffected by the increased size of the ul, and is therefore used to measure the width of the column items from.
       refElem = document.createElement('div');
       //add all boostrap column classes to the reference element
       for(var i = 0; i < gridColClasses.length; i++) {
-        refElem.classList.add(gridColClasses[i]);  
+        refElem.classList.add(gridColClasses[i]);
       }
       refElem.classList.add('grid-column-carousel__ref');
       elem.appendChild(refElem);
-      
+
       initializeSize();
-      
+
       if (displayPageIndicators) {
         initializeDots();
       }
-      
+
       listElem.classList.add('initialized');
-      
+
       //When the window resizes recalculate the width of the carousel
-      window.addEventListener('resize', _.throttle(reinitialize, throttleDelay, {'leading': true}));
+      window.addEventListener('resize', _.throttle(reinitializeSize, throttleDelay, {'leading': true}));
+
+      //start automatic slideing if set
+      if(autoplay) {
+        setAutomaticSlideChange();
+      }
+    }
+
+
+    function reinitialize() {
+      //Reset state
+      self.slide('first');
+      refElem.remove();
+      clearInterval(ManualResizeIntervalID);
+
+      //if autoplay is set, start automatic slide change. This will cancel any previously
+      //set waiting slide change.
+      if(autoplay) {
+        setAutomaticSlideChange();
+      }
+
+      initialize();
     }
 
     //Gets the size of the reference element and sets it as the size of the col items
@@ -88,11 +109,11 @@
 
       //Get the width of a slide
       slideWidth = elem.getBoundingClientRect().width;
-      
+
       //Calculate how many pages are necessary
       pagesCount = Math.ceil(colItems.length / (slideWidth / colItemWidth));
     }
-    
+
     //gets the index of an li
     function getIndex(node) {
       var childs = node.parentNode.childNodes;
@@ -100,7 +121,7 @@
         if (node === childs[i]) break;
       }
       return i;
-    }    
+    }
 
     //Creates the 'navigation dots'. Calculates how many items are visible pr slide,
     //and then how many navigation dots are necessary and injects them.
@@ -121,34 +142,34 @@
       }
     }
 
-    function reinitialize() {
-      console.log('reinitialize');
+    function reinitializeSize() {
+      console.log('reinitializeSize');
       initializeSize();
       if(displayPageIndicators) {
         initializeDots();
-      }      
+      }
       //to keep it simple i will reset the carousel to initial position
       self.slide('first');
     }
-    
+
     function setAutomaticSlideChange() {
       if(delayedSlide) {
         clearTimeout(delayedSlide);
       }
-      
+
       delayedSlide = setTimeout(function() {
         self.slide('next');
         delayedSlide = null;
       }, autoplayDelay);
     }
-    
+
     function setX(x) {
       currentX = x;
       listElem.style.WebkitTransform = 'translateX('+x+'px)';
       listElem.style.msTransform = 'translateX('+x+'px)';
       listElem.style.transform = 'translateX('+x+'px)';
     }
-    
+
     //slides to a specific page in the carousel, indicated by a number.
     //first page i index 0, and the nth page is index n-1.
     function slideToPage(pageNumber) {
@@ -158,35 +179,35 @@
       } else if(pageNumber >= pagesCount) {
         pageNumber = 0;
       }
-      
+
       //toggle active class on page indicators
       if(displayPageIndicators) {
         pageIndicatorsContainerElem.getElementsByClassName('active')[0].classList.remove('active');
         pageIndicatorsContainerElem.getElementsByClassName('grid-column-carousel__page-indicator')[pageNumber].classList.add('active');
-      }     
-      
+      }
+
       currentPage = pageNumber;
-      
+
       //if autoplay is set, start automatic slide change. This will cancel any previously
       //set waiting slide change.
       if(autoplay) {
         setAutomaticSlideChange();
       }
-      
+
       //if slide to the first page, just set translateX to 0.
       if(pageNumber === 0) {
         setX(0);
       } else {
         setX(pageNumber * slideWidth * -1);
-      }      
+      }
     }
-    
+
     function onIndicatorClick(e) {
       slideToPage(getIndex(e.currentTarget));
     }
-    
+
     //*****************Public functions*******************************************
-    
+
     //Slide the carousel. Takes arguments, 'left', 'right', 'first' and 'last'.
     //It is also possible to pass a number argument, to indicate which page to scroll to.
     this.slide = function(page) {
@@ -195,7 +216,7 @@
         slideToPage(page);
         return;
       }
-      
+
       switch (page) {
         case 'first':
           slideToPage(0);
@@ -214,29 +235,34 @@
           break;
       }
     };
-    
-    
-    //This method is used to manually to trigger a periodic resizing of the carousel. 
+
+
+    //This method is used to manually to trigger a periodic resizing of the carousel.
     //The same resizing that happens when a window 'resize' event occurs.
     //This method should be used when the container the carousel lives in changes size based on something else than window resize.
     this.startWatchManualResize = function(duration) {
-      ManualResizeIntervalID = setInterval(reinitialize, throttleDelay);
-      
+      ManualResizeIntervalID = setInterval(reinitializeSize, throttleDelay);
+
       if (duration && typeof duration == 'number') {
         setTimeout(function() {
           clearInterval(ManualResizeIntervalID);
         }, duration);
       }
     };
-    
+
     //Ends the periodic resizing from 'startWatchResize'
     this.endWatchManualResize = function() {
       clearInterval(ManualResizeIntervalID);
     };
-    
-    //a single call to the reinitialize function
+
+    //a single call to the reinitializeSize function.
+    //This will make sure that the size of pages and columns are recalculated.
+    this.reinitializeSize = reinitializeSize;
+
+    //This will reinstantiate the entire carousel. Remove old state and find
+    //list items and calculating item sizes.
     this.reinitialize = reinitialize;
   }
 
-  root.GCCarousel = GCCarousel;
-})(this, (typeof window._ === 'undefined' ? null : window._));
+  w.GCCarousel = GCCarousel;
+})(window, (typeof window._ === 'undefined' ? null : window._));

@@ -7,7 +7,7 @@
   -webkit-transform: translateX(0);
   transition: transform 0.5s ease-in-out;
   -webkit-transition: -webkit-transform 0.5s ease-in-out;
-  
+
   //clearfix styling
   &:after, &:before {
     content: ' '; /* 1 */
@@ -16,7 +16,7 @@
   &:after {
     clear: both;
   }
-  
+
   &.initialized {
     width: 9999px;
 
@@ -24,8 +24,12 @@
       display: block;
     }
   }
-  
+
   > * {
-    display: none;  
+    display: none;
+  }
+
+  [data-gcc-ignore] {
+    display: none;
   }
 }
