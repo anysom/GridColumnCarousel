@@ -5,18 +5,6 @@
     <link href="css/GridColumnCarousel.min.css" rel="stylesheet" type="text/css">
 
     <script src="js/GridColumnCarousel.js"></script>
-
-    <style>
-      .resizing-container {
-        background: aqua;
-        transition: width 0.5s ease-in-out;
-        width: 100%;
-      }
-
-      .small-container {
-        width: 70%;
-      }
-    </style>
   </head>
   <body>
     <h1>Grid Column Carousel - demonstration</h1>
@@ -26,22 +14,25 @@
       <div class="grid-column-carousel">
         <ul class="grid-column-carousel__list">
           <li class="to-be-hidden col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <h3>1 This is a column with a lot of text in</h3>
+            <img src="assets/1.jpg" alt="">
           </li>
           <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-column-carousel__ignore">
-            <h3>2 This is a column with a lot of text in</h3>
+            <img src="assets/2.jpg" alt="">
           </li>
           <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <h3>3 This is a column with a lot of text in</h3>
+            <img src="assets/3.jpg" alt="">
           </li>
           <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <h3>4 This is a column with a lot of text in</h3>
+            <img src="assets/4.jpg" alt="">
           </li>
           <li class="to-be-hidden col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <h3>5 This is a column with a lot of text in</h3>
+            <img src="assets/5.jpg" alt="">
           </li>
           <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <h3>6 This is a column with a lot of text in</h3>
+            <img src="assets/6.jpg" alt="">
+          </li>
+          <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <img src="assets/7.jpg" alt="">
           </li>
         </ul>
         <div class="grid-column-carousel__page-indicators">
@@ -74,7 +65,7 @@
       var options = {
         elem: document.getElementsByClassName('grid-column-carousel')[0],
         gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
-        autoplay: true
+        autoplay: false
       };
 
       var gCCarousel = new GCCarousel(options);

@@ -2,19 +2,25 @@ ul {
   padding: 0;
 }
 
-/*Example styling to make the slides visible, 
+/*Example styling to make the slides visible,
  but this IS NOT PART OF THE GridColumnCarousel styling*/
-.grid-column-carousel__list li h3 {
-  background: #ccc;
-  padding: 20px 0;
+body {
+  background: #f8f8f8;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3em;
 }
 
 .grid-column-carousel__page-indicators {
   list-style: none;
+  display: flex;
+  justify-content: center;
 }
 
 .grid-column-carousel__page-indicators li {
-  background: #eee;
+  background: #ddd;
   padding: 20px;
   border-radius: 50%;
   display: inline-block;
@@ -22,9 +28,43 @@ ul {
 }
 
 .grid-column-carousel__page-indicators li.active {
-  background: #bbb;
+  background: #888;
 }
 
 .button-panel {
   margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.button-panel > * {
+  margin: 0 10px;
+}
+
+.resizing-container {
+  transition: width 0.5s ease-in-out;
+  width: 100%;
+}
+
+.small-container {
+  width: 70%;
+}
+
+img {
+  width: 100%;
+}
+
+
+button {
+  background: none;
+  color: tomato;
+  border: 2px solid tomato;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
 }
