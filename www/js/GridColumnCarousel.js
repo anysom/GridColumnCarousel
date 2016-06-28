@@ -1,6 +1,19 @@
-;(function(w, _) {
+;(function(root, gridColumnCarousel) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register fadePager as an anonymous module
+        define(gridColumnCarousel);
+    } else if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = gridColumnCarousel();
+    } else {
+        // Browser globals. Register fadePager on window
+        root.GridColumnCarousel = gridColumnCarousel();
+    }
+})(this, function() {
   'use strict';
-
+  var _ = window._;
   /*if underscore or lodash is not defined. Create fallback object with simple throttle method*/
   if(!_) {
     _ = {
@@ -23,7 +36,7 @@
   }
 
   //Constructor
-  function GCCarousel(options) {
+  return function GCCarousel(options) {
     //Variables from options
     var
       elem =                        options.elem || null,       //The column carousel element.
@@ -269,7 +282,5 @@
     //This will reinstantiate the entire carousel. Remove old state and find
     //list items and calculating item sizes.
     this.reinitialize = reinitialize;
-  }
-
-  w.GCCarousel = GCCarousel;
-})(window, (typeof window._ === 'undefined' ? null : window._));
+  };
+});
