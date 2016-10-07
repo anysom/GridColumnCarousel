@@ -9,7 +9,7 @@
         module.exports = gridColumnCarousel();
     } else {
         // Browser globals. Register fadePager on window
-        root.GridColumnCarousel = gridColumnCarousel();
+        root.GCCarousel = gridColumnCarousel();
     }
 })(this, function() {
   'use strict';
