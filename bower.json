@@ -1,0 +1,22 @@
+{
+  "name": "GridColumnCarousel",
+  "description": "Carousel that supports multiple grid columns",
+  "main": "gulpfile.js",
+  "authors": [
+    "Anders Nysom"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Bootstrap",
+    "slider",
+    "carousel"
+  ],
+  "homepage": "https://github.com/anysom/GridColumnCarousel",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
