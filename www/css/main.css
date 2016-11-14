@@ -3,7 +3,7 @@ ul {
 }
 
 /*Example styling to make the slides visible,
- but this IS NOT PART OF THE GridColumnCarousel styling*/
+but this IS NOT PART OF THE GridColumnCarousel styling*/
 body {
   background: #f8f8f8;
 }
@@ -25,6 +25,7 @@ h1 {
   border-radius: 50%;
   display: inline-block;
   margin-left: 20px;
+  cursor: pointer;
 }
 
 .grid-column-carousel__page-indicators li.active {
