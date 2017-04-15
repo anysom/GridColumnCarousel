@@ -86,8 +86,17 @@
 
       listElem.classList.add('initialized');
 
+
+      var windowWidth = window.innerWidth;
       //When the window resizes recalculate the width of the carousel
-      window.addEventListener('resize', _.throttle(recalculateSize, throttleDelay, {'leading': true}));
+      window.addEventListener('resize', _.throttle(function () {
+        var newWidth = window.innerWidth;
+        // only resize if the width actually changes. Sometimes mobile devices throw the resize event without a horizontal resize;
+        if (newWidth !== windowWidth) {
+          windowWidth = newWidth;
+          recalculateSize();
+        }
+      }, throttleDelay, {'leading': true}));
 
       //start automatic slideing if set
       if(autoplay) {
