@@ -1,4 +1,4 @@
-;(function(root, gridColumnCarousel) {
+; (function (root, gridColumnCarousel) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register fadePager as an anonymous module
         define(gridColumnCarousel);
@@ -40,16 +40,16 @@
     //Variables from options
     var
       elem =                        options.elem || null,       //The column carousel element.
-      gridColClasses =              (options.gridColClasses || '').split(' '),     //The grid column classes used on the items in the carousel
+      //gridColClasses =              (options.gridColClasses || '').split(' '),     //The grid column classes used on the items in the carousel
       autoplay =                    options.autoplay || false,        //Dictates wether GCCarousel will loop through the pages automatically
       autoplayDelay =               options.autoplayDelay || 5000,    //Dictates the wait time between automatically changing pages.
       throttleDelay =               options.throttleDelay || 50,      //The throttle delay used by the underscore/lodash throttle method
       displayPageIndicators =       (typeof options.displayPageIndicators !== 'undefined') ? options.displayPageIndicators : true,    //display dots beneath the carousel to indicate carousel position
-      pageIndicatorsContainerElem = options.pageIndicatorsContainerElem || elem.getElementsByClassName('grid-column-carousel__page-indicators')[0];   //The class of the element that should contain the carousel dots
+      pageIndicatorsContainerElem = options.pageIndicatorsContainerElem || elem.getElementsByClassName('grid-column-carousel__page-indicators')[0],   //The class of the element that should contain the carousel dots
+      refElem = options.referenceElement || elem.querySelector('grid-column-carousel__ref');
 
     //private variables
-    var refElem,
-        colItemWidth,
+    var colItemWidth,
         delayedSlide = null,
         slideWidth,
         currentX = 0,
@@ -61,13 +61,13 @@
         colItems; //A list of all the column items
 
     initialize();
-    console.log(colItems);
 
     //*****************Private functions*******************************************
 
     function initialize() {
-      colItems = listElem.querySelectorAll('li:not([data-gcc-ignore])');
+      colItems = listElem.querySelectorAll('.gcc-cell:not([data-gcc-ignore])');
 
+/*
       //Create 'shadow' reference element with the same grid classes as the list items.
       //This item is unaffected by the increased size of the ul, and is therefore used to measure the width of the column items from.
       refElem = document.createElement('div');
@@ -75,8 +75,19 @@
       for(var i = 0; i < gridColClasses.length; i++) {
         refElem.classList.add(gridColClasses[i]);
       }
-      refElem.classList.add('grid-column-carousel__ref');
-      elem.appendChild(refElem);
+        refElem.classList.add('grid-column-carousel__ref');
+
+        var gridRef = document.createElement('div');
+        gridRef.classList.add('grid-x');
+        gridRef.classList.add('grid-margin-x');
+        gridRef.appendChild(refElem);
+
+        elem.appendChild(gridRef);*/
+
+        if (!refElem) {
+          console.warn('Missing reference element - Grid Column Carousel!');
+          return;
+        }
 
       initializeSize();
 
@@ -130,7 +141,7 @@
       }
 
       //Get the width of a slide
-      slideWidth = elem.getBoundingClientRect().width;
+      slideWidth = elem.getBoundingClientRect().width + 20; // the 20 is to compensate for the margin
 
       //Calculate how many pages are necessary
       pagesCount = Math.ceil(colItems.length / (slideWidth / colItemWidth));

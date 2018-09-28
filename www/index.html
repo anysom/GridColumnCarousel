@@ -1,6 +1,7 @@
 <html>
 <head>
   <link href="libs/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="libs/foundation.css" rel="stylesheet" type="text/css">
   <link href="css/main.css" rel="stylesheet" type="text/css">
   <link href="css/GridColumnCarousel.min.css" rel="stylesheet" type="text/css">
 </head>
@@ -8,27 +9,28 @@
   <h1>Grid Column Carousel - demonstration</h1>
   <div class="container">
    <div class="resizing-container row">
-    <div class="grid-column-carousel">
+     <h3>Bootstrap grid</h3>
+    <div class="grid-column-carousel" id="bootstrap-example">
       <ul class="grid-column-carousel__list">
-        <li class="to-be-hidden col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <li class="to-be-hidden col-xs-12 col-sm-6 col-md-4 col-lg-3 gcc-cell">
           <img src="assets/1.jpg" class="img-responsive" alt="">
         </li>
-        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-column-carousel__ignore">
+        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-column-carousel__ignore gcc-cell">
           <img src="assets/2.jpg" class="img-responsive" alt="">
         </li>
-        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 gcc-cell">
           <img src="assets/3.jpg" class="img-responsive" alt="">
         </li>
-        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 gcc-cell">
           <img src="assets/4.jpg" class="img-responsive" alt="">
         </li>
-        <li class="to-be-hidden col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <li class="to-be-hidden col-xs-12 col-sm-6 col-md-4 col-lg-3 gcc-cell">
           <img src="assets/5.jpg" class="img-responsive" alt="">
         </li>
-        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 gcc-cell">
           <img src="assets/6.jpg" class="img-responsive" alt="">
         </li>
-        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3 gcc-cell">
           <img src="assets/7.jpg" class="img-responsive" alt="">
         </li>
       </ul>
@@ -39,6 +41,11 @@
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-column-carousel__ref" id="bootstrap-example-ref"></div>
+  </div>
+
   <!-- Button section to demonstrate the methods that can be called on the GCCarousel object -->
   <div class="button-panel">
     <button class="first">Go to First</button>
@@ -55,14 +62,63 @@
     <button class="reinit">Reinitialize Slider</button>
   </div>
 </div>
+
+
+<div class="container">
+ <div class="resizing-container grid-container">
+   <h3>Foundation XY grid</h3>
+  <div class="grid-column-carousel" id="foundation-xy-example">
+
+
+    <ul class="grid-x grid-margin-x grid-column-carousel__list">
+      <li class="cell small-12 medium-6 large-4 gcc-cell">
+        <img src="assets/1.jpg" class="img-responsive" alt="">
+      </li>
+      <li class="cell small-12 medium-6 large-4 gcc-cell">
+        <img src="assets/2.jpg" class="img-responsive" alt="">
+      </li>
+      <li class="cell small-12 medium-6 large-4 gcc-cell">
+        <img src="assets/3.jpg" class="img-responsive" alt="">
+      </li>
+      <li class="cell small-12 medium-6 large-4 gcc-cell">
+        <img src="assets/4.jpg" class="img-responsive" alt="">
+      </li>
+      <li class="cell small-12 medium-6 large-4 gcc-cell">
+        <img src="assets/5.jpg" class="img-responsive" alt="">
+      </li>
+      <li class="cell small-12 medium-6 large-4 gcc-cell">
+        <img src="assets/6.jpg" class="img-responsive" alt="">
+      </li>
+      <li class="cell small-12 medium-6 large-4 gcc-cell">
+        <img src="assets/7.jpg" class="img-responsive" alt="">
+      </li>
+    </ul>
+    <div class="grid-column-carousel__page-indicators">
+      <ul>
+        <li class="dot active"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="grid-container">
+  <div class="grid-x grid-margin-x">
+    <div class="cell small-12 medium-6 large-4 grid-column-carousel__ref" id="foundation-xy-example-ref">
+
+    </div>
+  </div>
+</div>
+</div>
+
+
 </body>
 <script src="js/GridColumnCarousel.js"></script>
 <script>
   window.onload = function() {
     var options = {
-      elem: document.getElementsByClassName('grid-column-carousel')[0],
-      gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
-      autoplay: false
+      elem: document.querySelector('#bootstrap-example'),
+      //gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
+      autoplay: false,
+      referenceElement: document.querySelector('#bootstrap-example-ref')
     };
 
     var gCCarousel = new GCCarousel(options);
@@ -110,6 +166,17 @@
 
       gCCarousel.reinitialize();
     });
+
+
+    // Initialize the foundation example
+    var options = {
+      elem: document.querySelector('#foundation-xy-example'),
+      //gridColClasses: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
+      autoplay: false,
+      referenceElement: document.querySelector('#foundation-xy-example-ref')
+    };
+
+    var gCCarousel = new GCCarousel(options);
   };
 </script>
 </html>
