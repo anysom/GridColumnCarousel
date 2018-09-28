@@ -40,7 +40,6 @@
     //Variables from options
     var
       elem =                        options.elem || null,       //The column carousel element.
-      //gridColClasses =              (options.gridColClasses || '').split(' '),     //The grid column classes used on the items in the carousel
       autoplay =                    options.autoplay || false,        //Dictates wether GCCarousel will loop through the pages automatically
       autoplayDelay =               options.autoplayDelay || 5000,    //Dictates the wait time between automatically changing pages.
       throttleDelay =               options.throttleDelay || 50,      //The throttle delay used by the underscore/lodash throttle method
@@ -57,6 +56,7 @@
         currentPage = 0,
         self = this,
         ManualResizeIntervalID,
+        hammer = null,
         listElem = elem.querySelector('.grid-column-carousel__list'),   //The list element
         colItems; //A list of all the column items
 
@@ -66,24 +66,6 @@
 
     function initialize() {
       colItems = listElem.querySelectorAll('.gcc-cell:not([data-gcc-ignore])');
-
-/*
-      //Create 'shadow' reference element with the same grid classes as the list items.
-      //This item is unaffected by the increased size of the ul, and is therefore used to measure the width of the column items from.
-      refElem = document.createElement('div');
-      //add all boostrap column classes to the reference element
-      for(var i = 0; i < gridColClasses.length; i++) {
-        refElem.classList.add(gridColClasses[i]);
-      }
-        refElem.classList.add('grid-column-carousel__ref');
-
-        var gridRef = document.createElement('div');
-        gridRef.classList.add('grid-x');
-        gridRef.classList.add('grid-margin-x');
-        gridRef.appendChild(refElem);
-
-        elem.appendChild(gridRef);*/
-
         if (!refElem) {
           console.warn('Missing reference element - Grid Column Carousel!');
           return;
@@ -97,6 +79,48 @@
 
       listElem.classList.add('initialized');
 
+      // if HammerJS is available, enable dragging the slider
+      if (Hammer) {
+        hammer = new Hammer(listElem);
+        hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+
+        var startPanPosition = 0;
+
+        var snapInPosition = function (endPosition) {
+          var snapSlide = Math.round(endPosition / slideWidth) * -1;
+          slideToPage(snapSlide);
+          console.log('snapInPosition', snapSlide);
+        };
+
+        hammer.on('panstart', function(ev) {
+        	//console.log('panstart', startPanPosition);
+          listElem.classList.add('disable-transition');
+          var t = listElem.style.transform;
+
+          if (typeof t === 'string') {
+            if (t === '') {
+              t = 0;
+            } else {
+              t = t.substr(t.indexOf('(') + 1,t.indexOf('p')-t.indexOf('(') - 1);
+              t = parseInt(t);
+            }
+          }
+
+          startPanPosition = t;
+          //console.log('startPanPosition', startPanPosition);
+        });
+        hammer.on('panmove', function(ev) {
+        	//console.log('panmove', startPanPosition + ev.deltaX);
+          var move = startPanPosition + ev.deltaX;
+          setX(move);
+        });
+        hammer.on('panend', function(ev) {
+        	//console.log('panend', startPanPosition + ev.deltaX);
+          var move = startPanPosition + ev.deltaX;
+          listElem.classList.remove('disable-transition');
+          snapInPosition(move);
+        });
+      }
 
       var windowWidth = window.innerWidth;
       //When the window resizes recalculate the width of the carousel
@@ -206,10 +230,20 @@
     //first page i index 0, and the nth page is index n-1.
     function slideToPage(pageNumber) {
       //ensure that pageNumber is not out of bounds
-      if(pageNumber < 0) {
-        pageNumber = pagesCount - 1;
-      } else if(pageNumber >= pagesCount) {
-        pageNumber = 0;
+      // If Hammer is defined, dont carousel around
+      if (hammer != null) {
+        if(pageNumber < 0) {
+          pageNumber = 0;
+        } else if(pageNumber >= pagesCount) {
+          pageNumber = pagesCount - 1;
+        }
+      } else {
+
+        if(pageNumber < 0) {
+          pageNumber = pagesCount - 1;
+        } else if(pageNumber >= pagesCount) {
+          pageNumber = 0;
+        }
       }
 
       //toggle active class on page indicators

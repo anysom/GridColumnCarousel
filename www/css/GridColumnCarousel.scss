@@ -8,6 +8,11 @@
   transition: transform 0.5s ease-in-out;
   -webkit-transition: -webkit-transform 0.5s ease-in-out;
 
+
+  &.disable-transition {
+    transition: none;
+  }
+
   //clearfix styling
   &:after, &:before {
     content: ' ';
@@ -31,5 +36,9 @@
 
   [data-gcc-ignore] {
     display: none;
+  }
+
+  img {
+    pointer-events: none;
   }
 }
