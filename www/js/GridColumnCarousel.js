@@ -80,7 +80,7 @@
       listElem.classList.add('initialized');
 
       // if HammerJS is available, enable dragging the slider
-      if (Hammer) {
+      if (window.Hammer) {
         hammer = new Hammer(listElem);
         hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 
@@ -93,7 +93,10 @@
         };
 
         hammer.on('panstart', function(ev) {
-        	//console.log('panstart', startPanPosition);
+        	// dont pan if there arent more than 1 page
+          if (pagesCount <= 1) {
+            return;
+          }
           listElem.classList.add('disable-transition');
           var t = listElem.style.transform;
 
@@ -110,11 +113,17 @@
           //console.log('startPanPosition', startPanPosition);
         });
         hammer.on('panmove', function(ev) {
+          if (pagesCount <= 1) {
+            return;
+          }
         	//console.log('panmove', startPanPosition + ev.deltaX);
           var move = startPanPosition + ev.deltaX;
           setX(move);
         });
         hammer.on('panend', function(ev) {
+          if (pagesCount <= 1) {
+            return;
+          }
         	//console.log('panend', startPanPosition + ev.deltaX);
           var move = startPanPosition + ev.deltaX;
           listElem.classList.remove('disable-transition');
